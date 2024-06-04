@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>seller signup</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <section
+      style="
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        background: black;
+        margin: 0 !important;
+        align-items: center;
+        flex-direction: column;
+      "
+    >
+    <h1 style="color: white; font-size: 40px; padding-bottom: 20px;">Seller Signup</h1>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          flex-direction: column;
+          max-width: 500px;
+          gap: 20px;
+          border: 2px solid white;
+          border-radius: 20px;
+          padding: 0 20px;
+          height: 300px;
+        "
+      >
+    
+        <div style="display: flex; gap: 10px; width: 100%">
+          <input
+            id="id"
+            style="
+              width: 100%;
+              border: 2px solid #02cdcf;
+              padding: 15px 20px;
+              cursor: pointer;
+              border-radius: 8px;
+            "
+            type="text"
+            placeholder="Username"
+          />
+          <input
+            id="pswd"
+            style="
+              width: 100%;
+              border: 2px solid #02cdcf;
+              padding: 15px 20px;
+              cursor: pointer;
+              border-radius: 8px;
+            "
+            type="text"
+            placeholder="password"
+          />
+        </div>
+        <div style="display: flex; gap: 10px; width: 100%">
+          <input
+            id="email"
+            style="
+              width: 100%;
+              border: 2px solid #02cdcf;
+              padding: 15px 20px;
+              cursor: pointer;
+              border-radius: 8px;
+            "
+            type="email"
+            placeholder="Email"
+          />
+          <input
+            id="Contact"
+            style="
+              width: 100%;
+              border: 2px solid #02cdcf;
+              padding: 15px 20px;
+              cursor: pointer;
+              border-radius: 8px;
+            "
+            type="number"
+            placeholder="Contact"
+          />
+        </div>
+        <div style="display: flex; gap: 10px; width: 100%">
+          <input
+            id="Address"
+            style="
+              width: 100%;
+              border: 2px solid #02cdcf;
+              padding: 15px 20px;
+              cursor: pointer;
+              border-radius: 8px;
+            "
+            type="text"
+            placeholder="Address"
+          />
+          <input
+            id="pin"
+            style="
+              width: 100%;
+              border: 2px solid #02cdcf;
+              padding: 15px 20px;
+              cursor: pointer;
+              border-radius: 8px;
+            "
+            type="text"
+            placeholder="Pincode"
+          />
+        </div>
+        <a
+          href="./sellerLogin.html"
+          style="
+            width: 100%;
+            border: 2px solid white;
+            padding: 15px 20px;
+            color: white;
+            background-color: #02cdcf;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+          "
+          id="btn"
+        >
+          SIGN UP
+        </a>
+      </div>
+    </section>
+    <script>
+      const button = document.getElementById("btn");
+      button.addEventListener("click", () => {
+        fetch("http://localhost:3000/sellersignup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: document.getElementById("id").value,
+            pass: document.getElementById("pswd").value,
+            contact: document.getElementById("Contact").value,
+            Address: document.getElementById("Address").value,
+            pin: document.getElementById("pin").value,
+            mail: document.getElementById("email").value,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data));
+      });
+    </script>
+  </body>
+</html>

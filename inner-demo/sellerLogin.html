@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>seller login</title>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+      </style>
+</head>
+<body>
+    <section
+    style="
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      background: black;
+      margin: 0 !important;
+      align-items: center;
+      flex-direction: column;
+    "
+  >
+  <h1 style="color: white; font-size: 40px; padding-bottom: 20px;">Seller Login</h1>
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        flex-direction: column;
+        max-width: 300px;
+        gap: 20px;
+        border: 2px solid white;
+        border-radius: 20px;
+        padding: 0 20px;
+        height: 300px;
+      "
+    >
+      <input
+        id="loginid"
+        style="
+          width: 100%;
+          border: 2px solid #02cdcf;
+          padding: 15px 20px;
+          cursor: pointer;
+          border-radius: 8px;
+        "
+        type="text"
+        placeholder="Username"
+      />
+      <input
+        id="loginpass"
+        style="
+          width: 100%;
+          border: 2px solid #02cdcf;
+          padding: 15px 20px;
+          cursor: pointer;
+          border-radius: 8px;
+        "
+        type="text"
+        placeholder="password"
+      />
+      <div style="display: flex; width: 100%; gap: 20px;">
+        <a
+        href="#"
+          style="
+            width: 100%;
+            border: 2px solid white;
+            padding: 15px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            background-color: #02cdcf;
+            border-radius: 8px;
+          "
+          id="btn2"
+        >
+          Login
+      </a>
+      </div>
+    </div>
+  </section>
+  <script>
+    const btn2 = document.getElementById("btn2");
+      btn2.addEventListener("click", () => {
+        fetch("http://localhost:3000/sellerlogin", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: document.getElementById("loginid").value,
+            pass: document.getElementById("loginpass").value,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
+      });
+  </script>
+</body>
+</html>

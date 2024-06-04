@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>perchased route</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .card {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .input-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      label {
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      .number-input {
+        width: 200px;
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        margin-bottom: 10px;
+      }
+
+      .number-input:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        outline: none;
+      }
+
+      .number-input::-webkit-inner-spin-button,
+      .number-input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .number-input::placeholder {
+        color: #aaa;
+      }
+
+      .search-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+      }
+
+      .search-button:hover {
+        background-color: #0056b3;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .search-button:focus {
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="input-container">
+        <label for="number-input">Enter a Card ID:</label>
+        <input
+          type="text"
+          id="user-input"
+          class="number-input"
+          placeholder="Username"
+        />
+        <input
+          type="text"
+          id="id-input"
+          class="number-input"
+          placeholder="User-Id"
+        />
+        <input
+          type="text"
+          id="number-input"
+          class="number-input"
+          placeholder="Item-Id"
+        />
+        <button id="search" class="search-button">Search</button>
+        <div class="products-container" id="productsContainer"></div>
+      </div>
+    </div>
+    <script>
+      const btn2 = document.getElementById("search");
+      const productsContainer = document.getElementById("productsContainer");
+      btn2.addEventListener("click", () => {
+        fetch("http://localhost:3000/purchased", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: document.getElementById("user-input").value,
+            pass: document.getElementById("id-input").value,
+            item: document.getElementById("number-input").value,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
+      });
+    </script>
+  </body>
+</html>

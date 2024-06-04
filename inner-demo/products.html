@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Selling Card</title>
+    <style>
+      /* styles.css */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4;
+      }
+
+      .product-card {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        max-width: 400px;
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .product-card form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-card .product-image {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .product-card .product-image img {
+        width: 100%;
+        height: 300px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+      }
+
+      .product-card .product-image img:hover {
+        opacity: 0.8;
+      }
+
+      .product-card .product-image input {
+        display: none;
+      }
+
+      .product-card label {
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .product-card input[type="text"],
+      .product-card input[type="number"],
+      .product-card textarea {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        transition: border-color 0.3s ease;
+      }
+
+      .product-card input[type="text"]:focus,
+      .product-card input[type="number"]:focus,
+      .product-card textarea:focus {
+        border-color: #007bff;
+      }
+
+      .product-card .price-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .product-card .price-container input[type="number"] {
+        border-radius: 10px 0 0 10px;
+        border-right: none;
+        flex: 1;
+      }
+
+      .product-card .price-container select {
+        border-radius: 0 10px 10px 0;
+        border-left: none;
+        padding: 15px;
+        background-color: #f9f9f9;
+      }
+
+      .product-card button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+      }
+
+      .product-card button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="product-card">
+      <form id="product-form">
+        <div class="product-image">
+          <label for="product-image">
+            <img
+              id="preview-image"
+              src="https://via.placeholder.com/400"
+              style="width: 100%"
+              alt="Product Image"
+            />
+          </label>
+          <input
+            type="file"
+            id="product-image"
+            name="product-image"
+            accept="image/*"
+            onchange="previewImage(event)"
+          />
+        </div>
+        <div class="product-details">
+          <label for="product-title">Title</label>
+          <input
+            type="text"
+            id="product-title"
+            style="width: 100%; max-width: 330px"
+            name="product-title"
+            placeholder="Enter product title"
+            required
+          />
+          <br />
+          <label for="product-price">Price</label>
+          <div class="price-container" style="width: 100%; max-width: 330px">
+            <input
+              type="number"
+              id="product-price"
+              name="product-price"
+              placeholder="Enter price"
+              required
+            />
+            <select id="currency" name="currency">
+              <option value="USD">$ - USD</option>
+              <option value="INR">₹ - INR</option>
+              <option value="GBP">£ - GBP</option>
+              <option value="JPY">¥ - JPY</option>
+              <!-- Add more currencies as needed -->
+            </select>
+          </div>
+          <br />
+          <label for="product-description">Description</label>
+          <textarea
+            id="product-description"
+            style="width: 100%; max-width: 330px"
+            name="product-description"
+            rows="4"
+            placeholder="Enter product description"
+            required
+          ></textarea>
+
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+    <script>
+      let productIdCounter = 1; // Initialize the counter
+      function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+          const output = document.getElementById("preview-image");
+          output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+      }
+
+      document.getElementById("product-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const id = productIdCounter++; 
+        const image = document.getElementById("preview-image").src;
+        const title = document.getElementById("product-title").value;
+        const price = document.getElementById("product-price").value;
+        const currency = document.getElementById("currency").value;
+        const description = document.getElementById("product-description").value;
+        const priceWithCurrency = `${price} ${currency}`;
+        fetch("http://localhost:3000/add-product", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: id,
+            image: image,
+            title: title,
+            price: priceWithCurrency,
+            description: description,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data));
+      });
+    </script>
+  </body>
+</html>

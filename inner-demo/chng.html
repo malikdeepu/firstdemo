@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+      </style>
+</head>
+<body>
+    <section
+    style="
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      background: black;
+      margin: 0 !important;
+    "
+  >
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        flex-direction: column;
+        max-width: 300px;
+        gap: 20px;
+      "
+    >
+      <input
+        id="loginid"
+        style="
+          width: 100%;
+          border: 2px solid #02cdcf;
+          padding: 15px 20px;
+          cursor: pointer;
+          border-radius: 8px;
+        "
+        type="text"
+        placeholder="Username"
+      />
+      <input
+        id="currentpass"
+        style="
+          width: 100%;
+          border: 2px solid #02cdcf;
+          padding: 15px 20px;
+          cursor: pointer;
+          border-radius: 8px;
+        "
+        type="text"
+        placeholder="Current password"
+      />
+      <input
+        id="newpass"
+        style="
+          width: 100%;
+          border: 2px solid #02cdcf;
+          padding: 15px 20px;
+          cursor: pointer;
+          border-radius: 8px;
+        "
+        type="text"
+        placeholder="New password"
+      />
+      <button
+        style="
+          width: 100%;
+          border: 2px solid white;
+          padding: 15px 20px;
+          color: white;
+          background-color: #02cdcf;
+          border-radius: 8px;
+        "
+        id="btn3"
+      >
+      forget password
+      </button>
+    </div>
+  </section>
+  <script>
+    const btn3 = document.getElementById("btn3");
+      btn3.addEventListener("click", () => {
+        fetch("http://localhost:3000/forget", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: document.getElementById("loginid").value,
+            pass: document.getElementById("currentpass").value,
+            newpass: document.getElementById("newpass").value,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data));
+      });
+  </script>
+</body>
+</html>
